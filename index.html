@@ -8,6 +8,7 @@
     <style>
 
         body {
+
             background:
                 linear-gradient(
                     135deg,
@@ -131,6 +132,14 @@
                 0 0 10px rgba(129,140,248,0.5);
         }
 
+        input::placeholder {
+
+            color:
+                rgba(255,255,255,0.35);
+
+            letter-spacing: 1px;
+        }
+
         #fortune-btn {
 
             width: 100%;
@@ -164,7 +173,8 @@
 
         #fortune-btn:hover {
 
-            transform: translateY(-2px);
+            transform:
+                translateY(-2px);
 
             box-shadow:
                 0 6px 20px rgba(99,102,241,0.6);
@@ -221,6 +231,7 @@
         }
 
         .hidden {
+
             display: none !important;
         }
 
@@ -253,6 +264,7 @@
                     type="text"
                     id="u-name"
                     autocomplete="off"
+                    placeholder="例：たなかけんじ（フルネーム推奨）"
                 >
 
             </div>
@@ -267,6 +279,7 @@
                     type="text"
                     id="p-name"
                     autocomplete="off"
+                    placeholder="例：さとうゆい（フルネーム推奨）"
                 >
 
             </div>
@@ -320,7 +333,7 @@
     <script>
 
         const GAS_URL =
-        "https://script.google.com/macros/s/AKfycbxmMas9TDCT2Sbn-O9HlP9V9Z28PC2EjrPoVyjZ0RpGhpMI6YbXqqNzGtkKX5Ksldnl/exec";
+        "https://script.google.com/macros/s/AKfycbxy6sAxi2tdHxBxnucxgj8K8L52x0ZKwS0DCmJfejwyDflj5pGokwiY-DKG6tH9Lhtq/exec";
 
         function diagnose() {
 
@@ -401,7 +414,9 @@
             .then(res => res.json())
 
             .then(data => {
+
                 console.log(data);
+
                 btn.disabled = false;
 
                 btn.innerHTML =
@@ -413,7 +428,7 @@
                 ) {
 
                     alert(
-                        "✦ 星々が乱れています。しばらくしてから再びお試しください ✦"
+                        "✦ 星々が乱れています ✦"
                     );
 
                     return;
@@ -421,8 +436,6 @@
 
                 const result =
                     data.result;
-
-                // 点数取得
 
                 const match =
                     result.match(
