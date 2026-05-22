@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>星屑の姓名占科</title>
 
     <style>
@@ -41,7 +47,8 @@
             background:
                 rgba(255,255,255,0.05);
 
-            backdrop-filter: blur(10px);
+            backdrop-filter:
+                blur(10px);
 
             padding: 40px;
 
@@ -136,6 +143,8 @@
 
             color:
                 rgba(255,255,255,0.35);
+
+            letter-spacing: 1px;
         }
 
         #fortune-btn {
@@ -173,6 +182,20 @@
 
             transform:
                 translateY(-2px);
+
+            box-shadow:
+                0 6px 20px rgba(99,102,241,0.6);
+        }
+
+        #fortune-btn:disabled {
+
+            background: #475569;
+
+            cursor: not-allowed;
+
+            transform: none;
+
+            box-shadow: none;
         }
 
         .hidden {
@@ -210,6 +233,8 @@
 
             box-shadow:
                 0 0 10px rgba(255,255,255,0.05);
+
+            word-break: break-all;
         }
 
         .pair-center {
@@ -262,6 +287,7 @@
         }
 
     </style>
+
 </head>
 
 <body>
@@ -270,7 +296,9 @@
 
         <div id="setup-screen">
 
-            <h1>✦ 星屑の姓名占科 ✦</h1>
+            <h1>
+                ✦ 星屑の姓名占科 ✦
+            </h1>
 
             <div class="prologue">
 
@@ -283,7 +311,7 @@
             <div class="input-group">
 
                 <label>
-                    あなたのお名前
+                    あなたのお名前（ひらがな）
                 </label>
 
                 <input
@@ -298,7 +326,7 @@
             <div class="input-group">
 
                 <label>
-                    お相手のお名前
+                    お相手のお名前（ひらがな）
                 </label>
 
                 <input
@@ -326,7 +354,9 @@
             class="hidden"
         >
 
-            <h1>✦ 鑑定結果 ✦</h1>
+            <h1>
+                ✦ 鑑定結果 ✦
+            </h1>
 
             <div class="pair-box">
 
@@ -376,8 +406,10 @@
 
     <script>
 
+        // GAS URL
+
         const GAS_URL =
-        "https://script.google.com/macros/s/AKfycbx0irCbxBOKYgGI_8qp7vCWUmJB9raGWgaIsHnfOcJ5_2TYoRC9nds2I7gl4I31Ql0A/exec";
+        "https://script.google.com/macros/s/AKfycbw9BvsRWDiq5uUvrHrKnJnyG1-H6lG-hTy9heYv-MtrUJg5eYPXwxjcrdd90WhsXpX7/exec";
 
         function diagnose() {
 
@@ -397,6 +429,8 @@
                 document
                 .getElementById("fortune-btn");
 
+            // 空欄防止
+
             if (!u || !p) {
 
                 alert(
@@ -406,6 +440,8 @@
                 return;
             }
 
+            // 同名防止
+
             if (u === p) {
 
                 alert(
@@ -414,6 +450,8 @@
 
                 return;
             }
+
+            // ひらがな判定
 
             const hiraRegex =
                 /^[ぁ-んーゔ]+$/;
@@ -429,6 +467,20 @@
 
                 return;
             }
+
+            // URLの?id=
+
+            const userId =
+
+                new URLSearchParams(
+                    location.search
+                ).get("id")
+
+                ||
+
+                "unknown";
+
+            // ローディング
 
             const originalText =
                 btn.innerHTML;
@@ -449,8 +501,12 @@
                     },
 
                     body: JSON.stringify({
+
                         p1: u,
-                        p2: p
+
+                        p2: p,
+
+                        userId: userId
                     })
                 }
             )
@@ -458,6 +514,8 @@
             .then(res => res.json())
 
             .then(data => {
+
+                console.log(data);
 
                 btn.disabled = false;
 
@@ -476,6 +534,8 @@
                     return;
                 }
 
+                // 名前表示
+
                 document
                 .getElementById(
                     "left-name"
@@ -488,8 +548,12 @@
                 )
                 .innerText = p;
 
+                // 結果
+
                 const result =
                     data.result;
+
+                // 点数取得
 
                 const match =
                     result.match(
@@ -506,6 +570,8 @@
                         );
                 }
 
+                // 色分け
+
                 let cls =
                     "normal";
 
@@ -520,6 +586,8 @@
 
                     cls = "bad";
                 }
+
+                // 画面切替
 
                 document
                 .getElementById(
@@ -549,7 +617,9 @@
 
             })
 
-            .catch(() => {
+            .catch(error => {
+
+                console.error(error);
 
                 btn.disabled = false;
 
