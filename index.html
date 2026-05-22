@@ -148,8 +148,8 @@
     </div>
 
     <script>
-        // URLが重複していたため、後半の新しい方を残して統合しました
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbwmvlzlMLfvtc_1K93ZVDXwYAdlYgvC4aW6l9hXQ1UZL-zxkAHIqTRDimVN5cZZfbR2/exec";
+        // 最新のGASウェブアプリURLを設定
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbzvCHP0AJOibhoiQ23yK_qRyRYpoLZgX1KhQero6vuRwCtem1y3GCnd8apU1efsQyk/exec";
 
         function diagnose() {
             const u = document.getElementById('u-name').value.trim();
@@ -171,7 +171,7 @@
                 return;
             }
 
-            // ボタンを「診断中...」にしてくるくる回す（あなたの書いた演出を100%維持）
+            // ボタンのローディング演出
             const originalBtnText = btn.innerHTML;
             btn.disabled = true;
             btn.innerHTML = `
@@ -202,6 +202,7 @@
                 if (data.status === "success") {
                     const res = data.result;
                     let cls = "normal";
+                    
                     // 得点に応じたクラス分けのロジック
                     if (res.includes("100") || res.includes("80") || res.includes("85") || res.includes("90") || res.includes("95")) cls = "good";
                     else if (res.includes("10") || res.includes("15") || res.includes("20") || res.includes("25") || res.includes("30") || res.includes("35")) cls = "bad";
