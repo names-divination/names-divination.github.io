@@ -55,7 +55,7 @@
 
             width: 90%;
 
-            max-width: 420px;
+            max-width: 460px;
 
             text-align: center;
         }
@@ -136,8 +136,6 @@
 
             color:
                 rgba(255,255,255,0.35);
-
-            letter-spacing: 1px;
         }
 
         #fortune-btn {
@@ -175,35 +173,68 @@
 
             transform:
                 translateY(-2px);
-
-            box-shadow:
-                0 6px 20px rgba(99,102,241,0.6);
         }
 
-        #fortune-btn:disabled {
+        .hidden {
 
-            background: #475569;
+            display: none !important;
+        }
 
-            cursor: not-allowed;
+        .pair-box {
 
-            transform: none;
+            display: flex;
 
-            box-shadow: none;
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-top: 20px;
+
+            margin-bottom: 25px;
+
+            gap: 10px;
+        }
+
+        .pair-name {
+
+            flex: 1;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            font-size: 1rem;
+
+            box-shadow:
+                0 0 10px rgba(255,255,255,0.05);
+        }
+
+        .pair-center {
+
+            font-size: 1.5rem;
+
+            color: #c4b5fd;
         }
 
         .result-main {
 
-            margin-top: 20px;
+            margin-top: 10px;
 
-            padding: 15px;
+            padding: 18px;
 
-            border-radius: 8px;
+            border-radius: 12px;
 
             white-space: pre-wrap;
 
-            line-height: 1.8;
+            line-height: 1.9;
 
-            font-size: 1.2rem;
+            font-size: 1.15rem;
+
+            background:
+                rgba(255,255,255,0.04);
         }
 
         .good {
@@ -230,11 +261,6 @@
                 0 0 15px rgba(56,189,248,0.7);
         }
 
-        .hidden {
-
-            display: none !important;
-        }
-
     </style>
 </head>
 
@@ -257,7 +283,7 @@
             <div class="input-group">
 
                 <label>
-                    あなたのお名前（ひらがな）
+                    あなたのお名前
                 </label>
 
                 <input
@@ -272,7 +298,7 @@
             <div class="input-group">
 
                 <label>
-                    お相手のお名前（ひらがな）
+                    お相手のお名前
                 </label>
 
                 <input
@@ -301,6 +327,24 @@
         >
 
             <h1>✦ 鑑定結果 ✦</h1>
+
+            <div class="pair-box">
+
+                <div
+                    class="pair-name"
+                    id="left-name"
+                ></div>
+
+                <div class="pair-center">
+                    ✦
+                </div>
+
+                <div
+                    class="pair-name"
+                    id="right-name"
+                ></div>
+
+            </div>
 
             <div
                 id="result-output"
@@ -333,7 +377,7 @@
     <script>
 
         const GAS_URL =
-        "https://script.google.com/macros/s/AKfycbxy6sAxi2tdHxBxnucxgj8K8L52x0ZKwS0DCmJfejwyDflj5pGokwiY-DKG6tH9Lhtq/exec";
+        "https://script.google.com/macros/s/AKfycbx0irCbxBOKYgGI_8qp7vCWUmJB9raGWgaIsHnfOcJ5_2TYoRC9nds2I7gl4I31Ql0A/exec";
 
         function diagnose() {
 
@@ -365,7 +409,7 @@
             if (u === p) {
 
                 alert(
-                    "✦ ご自身と同じ魂を重ねることはできません ✦"
+                    "✦ 同じ名前同士は占えません ✦"
                 );
 
                 return;
@@ -415,8 +459,6 @@
 
             .then(data => {
 
-                console.log(data);
-
                 btn.disabled = false;
 
                 btn.innerHTML =
@@ -433,6 +475,18 @@
 
                     return;
                 }
+
+                document
+                .getElementById(
+                    "left-name"
+                )
+                .innerText = u;
+
+                document
+                .getElementById(
+                    "right-name"
+                )
+                .innerText = p;
 
                 const result =
                     data.result;
